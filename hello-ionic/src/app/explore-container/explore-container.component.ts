@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import mixpanel from 'mixpanel-browser';
-mixpanel.init('5daeef21e81cce2d44e4248d5e70a926', {
+mixpanel.init('6ebe0a4fe373712a9dea3fa4b069b224', {
 	debug: true,
 	ignore_dnt: true,
 	ip: true,
