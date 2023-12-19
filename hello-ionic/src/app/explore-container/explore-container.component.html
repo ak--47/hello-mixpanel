@@ -1,0 +1,20 @@
+<div id="container">
+  <strong>{{ name }}</strong>
+  <p>
+    Explore
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://ionicframework.com/docs/components"
+      >UI Components</a
+    >
+  </p>
+  <br/><br/><br/><br/>
+  <p>
+  <ion-button fill="none" (click)="onButtonClick($event)">click me</ion-button>
+  <ion-button fill="clear" (click)="onButtonClick($event)">not me</ion-button>
+  <ion-button fill="outline" (click)="onButtonClick($event)">maybe me</ion-button>
+  <ion-button fill="solid" (click)="onButtonClick($event)">hardly me</ion-button>
+</p>
+  
+</div>
