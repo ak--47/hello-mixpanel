@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "serve ."
+	"start": "npx serve .",
+    "serve": "npx serve ."
   },
   "author": "",
   "license": "ISC"
