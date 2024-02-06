@@ -25,6 +25,8 @@
 </head>
 <body>
 <p><a href="https://docs.mparticle.com/developers/quickstart/web/track-events/#62-track-page-views">DOCS</a></p>
+
+<h2>PAGES</h2>
 <pre>
  mParticle.logPageView(
     "PAGE-TITLE",
@@ -34,12 +36,40 @@
 );   
 </pre>
 
+<h2>EVENTS</h2>
 <pre>
 mParticle.logEvent(
-        'Navbar Click',
+        'HELLO WORLD',
         mParticle.EventType.Navigation,
        {"foo": "bar"}
     );    
 </pre>
+
+<h2>IDENTIFY</h2>
+<pre>
+	var identityRequest = {
+		userIdentities: {
+		  email: 'ak@mixpanel.com',
+		  customerid: '123456789'    
+		}
+	  };
+	  var identityCallback = function(result) { 
+		if (result.getUser()) { 
+		  console.log('identify successful!')
+		} 
+	  };
+	  mParticle.Identity.login(identityRequest, identityCallback);
+</pre>
+
+<h2>LOGOUT</h2>
+<pre>
+	var deIdentifyCallback = function(result) { 
+		if (result.getUser()) { 
+			console.log('un-identify successful!')
+		} 
+	  };
+	  mParticle.Identity.logout({}, deIdentifyCallback);
+</pre>
+
 </body>
 </html>
