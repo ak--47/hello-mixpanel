@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1">
+	<title>heap demo</title>
+	<!-- HEAP SDK -->
+	<script type="text/javascript">
+		var HEAP_APP_ID = `69731892`;
+	  window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])};
+  heap.load(HEAP_APP_ID);
+
+	</script>
+</head>
+
+<body>
+	<button id="clickMe">click me</button>
+	<button id="dontClickMe">don't click me</button>
+
+
+	<p><a href="https://developers.heap.io/reference/track">DOCS</a></p>
+	
+	<h2>EVENTS</h2>
+	<pre>
+		heap.track('Purchase', {dollars: 50, item: 'Furby'});
+
+	</pre>
+	
+	<h2>IDENTIFY</h2>
+	<pre>
+		heap.identify('1337');
+		heap.addUserProperties({'lucky Number': Math.floor(Math.random()*10000000), 'foo': ['bar','baz','qux']});
+	</pre>
+	
+	<h2>LOGOUT</h2>
+	<pre>
+		heap.resetIdentity();
+	</pre>
+	
+</body>
+
+</html>

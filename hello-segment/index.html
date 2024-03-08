@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1">
+	<title>segment demo</title>
+
+	<script type="text/javascript">
+		const SEGMENT_API_KEY = `X69SxlwrZHtYejVHY8aiWlgd5aZx1M8v`;
+		!function () {
+			var analytics = window.analytics = window.analytics || []; if (!analytics.initialize) if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice."); else {
+				analytics.invoked = !0; analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "once", "off", "on"]; analytics.factory = function (t) { return function () { var e = Array.prototype.slice.call(arguments); e.unshift(t); analytics.push(e); return analytics; }; }; for (var t = 0; t < analytics.methods.length; t++) { var e = analytics.methods[t]; analytics[e] = analytics.factory(e); } analytics.load = function (t, e) { var n = document.createElement("script"); n.type = "text/javascript"; n.async = !0; n.src = "https://cdn.segment.com/analytics.js/v1/" + t + "/analytics.min.js"; var a = document.getElementsByTagName("script")[0]; a.parentNode.insertBefore(n, a); analytics._loadOptions = e; }; analytics.SNIPPET_VERSION = "4.1.0";
+				analytics.load(SEGMENT_API_KEY);
+				analytics.page();
+			}
+		}();
+	</script>
+</head>
+
+<body>
+	<button id="clickMe">click me</button>
+	<button id="dontClickMe">don't click me</button>
+
+	<p><a href="https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/">DOCS</a></p>
+
+	<h2>PAGES</h2>
+	<pre>
+		analytics.page('Pricing', {
+			title: 'Segment Pricing',
+			url: 'https://segment.com/pricing',
+			path: '/pricing',
+			referrer: 'https://segment.com/warehouses'
+		  });		  
+	</pre>
+
+	<h2>EVENTS</h2>
+	<pre>
+		analytics.track('Article Completed', {
+			title: 'How to Create a Tracking Plan',
+			course: 'Intro to Analytics',
+		  });
+	</pre>
+
+	<h2>IDENTIFY</h2>
+	<pre>
+		analytics.identify('user_123', {
+			email: 'jane.kim@example.com',
+			name: 'Jane Kim'
+		  }, {
+			integrations: {
+			  'All': false,
+			  'Intercom': true,
+			  'Google Analytics': true
+			}
+		  });
+	</pre>
+
+	<h2>LOGOUT</h2>
+	<pre>
+		analytics.reset();
+	</pre>
+
+</body>
+
+</html>

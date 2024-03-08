@@ -1,11 +1,13 @@
 {
-  "name": "hello-mparticle",
+  "name": "hello-amplitude",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
   "scripts": {
-	"start": "npx serve ."
+	"start": "npx serve .",
+	"import": "node import.js"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC"
 }
