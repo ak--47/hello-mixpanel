@@ -2,7 +2,7 @@ const Chance = require('chance');
 const chance = new Chance();
 const { weightedRange, makeProducts, date } = require('make-mp-data');
 
-/** @typedef {import('./types').Config} JobConfig */
+/** @typedef {import('./types').Dungeon} JobConfig */
 
 /** @type {JobConfig} */
 const config = {

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-	"start": "npx serve ."
+	"start": "npx serve .",
+	"import": "node import.js",
+	"dev": "nodemon import.js"
   },
   "keywords": [],
   "author": "",

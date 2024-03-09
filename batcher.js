@@ -4,6 +4,8 @@ const u = require("ak-tools");
 const readline = require('readline');
 const querystring = require('querystring');
 
+/** @typedef {import('./types').BatchRequestConfig} BatchConfig */
+
 async function makePostRequest(url, data, searchParams = null, contentType = 'application/json', bodyParams) {
 	if (!url) return Promise.resolve("No URL provided");
 	if (!data) return Promise.resolve("No data provided");
@@ -36,6 +38,7 @@ async function makePostRequest(url, data, searchParams = null, contentType = 'ap
 
 		else if (bodyParams) {
 			payload = { [bodyParams["dataKey"]]: data, ...bodyParams };
+			delete payload.dataKey;
 			request.body = JSON.stringify(payload);
 		}
 
@@ -73,18 +76,10 @@ function batchData(data, batchSize, bodyParams = null) {
 	return batches;
 }
 
-/**
- * @typedef {Object} JobConfig - The configuration object for the batch request job.
- * @property {string} url - The URL of the API endpoint.
- * @property {Object[]} data - An array of data objects to be sent in the requests.
- * @property {number} batchSize - The number of records to be sent in each batch.
- * @property {number} concurrency - The level of concurrency for the requests.
- * @property {Object | null} searchParams - An object representing the search parameters to be appended to the URL.
- */
 
 /**
  * A function to send a batch of POST requests to an API endpoint.
- * @param  {JobConfig} PARAMS
+ * @param  {BatchConfig} PARAMS
  * @returns {Promise<Object[]>} - An array of responses from the API.
  * @example
  * const jobConfig = { url: "https://api.example.com", data: [{...}, {...}], searchParams: {verbose: "1"} };

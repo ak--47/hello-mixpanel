@@ -2,16 +2,25 @@ const batchQueue = require('../batcher.js');
 const dataSpec = require('../dungeon.js');
 const { generate } = require('make-mp-data');
 const u = require('ak-tools');
-require('dotenv').config({ path: "../.env", debug: true, "encoding": "utf8"});
+require('dotenv').config({ path: "../.env", debug: true, "encoding": "utf8" });
+
+/** @typedef {import('../types').BatchRequestConfig} BatchReqConfig */
+/** @typedef {import('../types').Dungeon} DungeonConfig */
+
+const AMP_EVENTS_ENDPOINT = `https://api.amplitude.com/2/httpapi`;
+const AMP_USERS_ENDPOINT = `https://api2.amplitude.com/identify`;
+const AMP_API_KEY = process.env.AMPLITUDE_API_KEY;
 
 // ? https://www.docs.developers.amplitude.com/analytics/apis/http-v2-api/#upload-request
+
+/**
+ * @param  {DungeonConfig} spec=dataSpec
+ */
 async function main(spec = dataSpec) {
 	console.log("\nGenerating Amplitude data...\n\n");
 	const data = await generate(spec);
 	const { eventData, userProfilesData } = data;
-	const AMP_EVENTS_ENDPOINT = `https://api.amplitude.com/2/httpapi`;
-	const AMP_USERS_ENDPOINT = `https://api2.amplitude.com/identify`;
-	const AMP_API_KEY = process.env.AMPLITUDE_API_KEY;
+
 	const amplitudeEvents = eventData.map(event => {
 		const ampEvent = {
 			user_id: event.distinct_id,
@@ -24,6 +33,7 @@ async function main(spec = dataSpec) {
 		return ampEvent;
 	});
 
+	/** @type {BatchReqConfig} */
 	const eventsJobConfig = {
 		url: AMP_EVENTS_ENDPOINT,
 		data: amplitudeEvents,
@@ -51,6 +61,7 @@ async function main(spec = dataSpec) {
 		return ampUser;
 	});
 
+	/** @type {BatchReqConfig} */
 	const usersJobConfig = {
 		url: AMP_USERS_ENDPOINT,
 		data: amplitudeUsers,
@@ -65,7 +76,7 @@ async function main(spec = dataSpec) {
 
 	console.log(`\nsending ${u.comma(amplitudeUsers.length)} users to Amplitude...\n`);
 	const userResponses = await batchQueue(usersJobConfig);
-	console.log(`\n... sent ${u.comma(amplitudeUsers.length)} events to Amplitude.`);
+	console.log(`\n... sent ${u.comma(amplitudeUsers.length)} users to Amplitude.`);
 
 	return {
 		users: userResponses,
@@ -81,7 +92,7 @@ if (require.main === module) {
 		.catch((err) => {
 			debugger;
 		})
-		.finally(() => console.log(`\n\n\t... your lucky numbers are ${u.rand(1, 42)} ${u.rand(1, 42)} ${u.rand(1, 42)}`));
+		.finally(() => console.log(`\n\n\t... your lucky numbers are ${u.rand(1, 42)} ${u.rand(1, 42)} ${u.rand(1, 42)}\n\n`));
 }
 else {
 	module.exports = main;
