@@ -7,57 +7,53 @@
 		content="width=device-width, initial-scale=1">
 	<title>pendo demo</title>
 	<!-- PENDO SDK -->
-	<script type="text/javascript">
-		const PENDO_API_KEY = `SOME_API_KEY`;
+	<script>
+		const PENDO_API_KEY = `9865d51d-6df4-426f-42f9-8b68222798d9`;
 		(function (apiKey) {
 			(function (p, e, n, d, o) {
-				var v, w, x, y, z;
-				o = p[d] = p[d] || {};
-				o._q = o._q || [];
-
-				v = ['initialize', 'identify', 'updateOptions', 'pageLoad', 'track'];
-				for (w = 0, x = v.length; w < x; ++w)(function (m) {
-
-					o[m] = o[m] || function () {
-						o._q[m === v[0] ? 'unshift' : 'push']([m].concat([].slice.call(arguments, 0)));
-					};
+				var v, w, x, y, z; o = p[d] = p[d] || {}; o._q = o._q || [];
+				v = ['initialize', 'identify', 'updateOptions', 'pageLoad', 'track']; for (w = 0, x = v.length; w < x; ++w)(function (m) {
+					o[m] = o[m] || function () { o._q[m === v[0] ? 'unshift' : 'push']([m].concat([].slice.call(arguments, 0))); };
 				})(v[w]);
-
-				y = e.createElement(n);
-				y.async = !0;
-				y.src = 'https://cdn.pendo.io/agent/static/' + apiKey + '/pendo.js';
-
-				z = e.getElementsByTagName(n)[0];
-				z.parentNode.insertBefore(y, z);
+				y = e.createElement(n); y.async = !0; y.src = 'https://cdn.pendo.io/agent/static/' + apiKey + '/pendo.js';
+				z = e.getElementsByTagName(n)[0]; z.parentNode.insertBefore(y, z);
 			})(window, document, 'script', 'pendo');
-		})(PENDO_API_KEY);
-	</script>
+		})(PENDO_API_KEY);	
+
+		console.log('https://agent.pendo.io/track-events/')
 	</script>
 </head>
 
 <body>
+	<script>
+		pendo.initialize({
+			visitor: {
+				id: "ak",
+				email: "ak@aktunes.com",
+				firstName: "A",
+				lastName: "K",
+			},
+
+			account: {
+				id: "mp-420",
+				accountName: "mixpanel",
+				payingStatus: "paid",
+			}
+		});
+	</script>
 	<button id="clickMe">click me</button>
 	<button id="dontClickMe">don't click me</button>
 
-	<p><a href="https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/">DOCS</a></p>
+	<p><a href="https://agent.pendo.io/track-events/">DOCS</a></p>
 
 	<h2>DEBUG</h2>
 	<pre>
 		pendo.validateEnvironment()
 	</pre>
-	<h2>PAGES</h2>
-	<pre>
-		analytics.page('Pricing', {
-			title: 'Segment Pricing',
-			url: 'https://segment.com/pricing',
-			path: '/pricing',
-			referrer: 'https://segment.com/warehouses'
-		  });		  
-	</pre>
 
 	<h2>EVENTS</h2>
 	<pre>
-		analytics.track('Article Completed', {
+		pendo.track('Article Completed', {
 			title: 'How to Create a Tracking Plan',
 			course: 'Intro to Analytics',
 		  });

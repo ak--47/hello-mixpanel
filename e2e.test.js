@@ -3,6 +3,7 @@ const longTimeout = 75000;
 const amplitude = require("./hello-amplitude/import.js");
 const heap = require("./hello-heap/import.js");
 const mixpanel = require("./hello-javascript/import.js");
+const pendo = require("./hello-pendo/import.js");
 
 /** @typedef {import('./types').Dungeon} JobConfig */
 
@@ -49,10 +50,24 @@ describe("importers", () => {
 		async () => {
 			const data = await mixpanel(baseConfig);
 			const { events, users } = data;
-			expect(events.every(t => t.code ===200)).toBe(true);
+			expect(events.every(t => t.code === 200)).toBe(true);
 			expect(users.every(t => t === "1")).toBe(true);
 			expect(events.length).toBeGreaterThan(0);
 			expect(users.length).toBeGreaterThan(0);
+
+		},
+		longTimeout
+	);
+
+
+	test(
+		"pendo",
+		async () => {
+			const data = await pendo({ ...baseConfig, numEvents: 50, numUsers: 2 });
+			const { events, users } = data;
+			expect(events.every(t => t === "")).toBe(true);
+			expect(events.length).toBeGreaterThan(0);
+			expect(users.length).toBe(0);
 
 		},
 		longTimeout

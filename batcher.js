@@ -54,7 +54,7 @@ async function makePostRequest(url, data, searchParams = null, headers = { "Cont
 
 		let responseBody = await response.text();
 		if (u.isJSONStr(responseBody)) return JSON.parse(responseBody);
-		else return responseBody;		
+		else return responseBody;
 
 	} catch (error) {
 		console.error("Error making POST request:", error);
@@ -66,8 +66,14 @@ async function makePostRequest(url, data, searchParams = null, headers = { "Cont
 function batchData(data, batchSize, bodyParams = null) {
 	const batches = [];
 	for (let i = 0; i < data.length; i += batchSize) {
-		let batch = data.slice(i, i + batchSize);
-		batches.push(batch);
+		if (batchSize === 1) {
+			let batch = data[i];
+			batches.push(batch);
+		}
+		else {
+			let batch = data.slice(i, i + batchSize);
+			batches.push(batch);
+		}
 	}
 	return batches;
 }

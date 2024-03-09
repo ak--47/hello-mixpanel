@@ -9,5 +9,8 @@
 		"**/node_modules/**",
 		"**/hello-ionic/**",
 		"**/*.spec.ts",
+	],
+	"cSpell.words": [
+		"PENDO"
 	]
 }
