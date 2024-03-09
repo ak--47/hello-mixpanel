@@ -71,6 +71,6 @@ export interface BatchRequestConfig {
   searchParams: object | null;
   /**  An object representing the body parameters to be sent in the request. */
   bodyParams: object | null;
-  /**  The content type of the request. */
-  contentType: string;
+  /**  An object representing the headers to be sent in the request. */
+  headers: object;
 }

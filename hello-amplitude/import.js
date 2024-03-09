@@ -67,7 +67,7 @@ async function main(spec = dataSpec) {
 		data: amplitudeUsers,
 		batchSize: 10,
 		concurrency: 2,
-		contentType: 'application/x-www-form-urlencoded',
+		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		bodyParams: {
 			api_key: AMP_API_KEY,
 			dataKey: "identification"

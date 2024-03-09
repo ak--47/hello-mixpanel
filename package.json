@@ -13,7 +13,7 @@
     "chance": "^1.1.11",
     "dotenv": "^16.4.5",
     "fetch-retry": "^5.0.6",
-    "make-mp-data": "^1.0.12",
+    "make-mp-data": "^1.0.13",
     "run-queue": "^2.0.1"
   },
   "devDependencies": {

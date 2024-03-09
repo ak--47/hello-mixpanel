@@ -13,7 +13,6 @@ const HEAP_APP_ID = process.env.HEAP_APP_ID;
 
 // ? https://developers.heap.io/reference/bulk-track
 
-
 async function main(spec = dataSpec) {
 	console.log("\nGenerating Heap data...\n\n");
 	const data = await generate(spec);
@@ -47,8 +46,7 @@ async function main(spec = dataSpec) {
 	};
 
 	console.log(`sending ${u.comma(heapEvents.length)} events to Heap...\n`);
-	const eventResponses = await batchQueue(eventsJobConfig);
-	// const eventsSent = eventResponses.reduce((acc, res) => acc + res.events_ingested, 0);
+	const eventResponses = await batchQueue(eventsJobConfig);	
 	console.log(`\n... sent ${u.comma(heapEvents.length)} events to Heap.`);
 
 

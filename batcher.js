@@ -6,7 +6,7 @@ const querystring = require('querystring');
 
 /** @typedef {import('./types').BatchRequestConfig} BatchConfig */
 
-async function makePostRequest(url, data, searchParams = null, contentType = 'application/json', bodyParams) {
+async function makePostRequest(url, data, searchParams = null, headers = { "Content-Type": 'application/json' }, bodyParams) {
 	if (!url) return Promise.resolve("No URL provided");
 	if (!data) return Promise.resolve("No data provided");
 
@@ -19,9 +19,7 @@ async function makePostRequest(url, data, searchParams = null, contentType = 'ap
 	try {
 		const request = {
 			method: "POST",
-			headers: {
-				"Content-Type": contentType,
-			},
+			headers: headers,
 			searchParams: searchParams,
 			retries: 3,
 			retryDelay: 1000,
@@ -30,7 +28,7 @@ async function makePostRequest(url, data, searchParams = null, contentType = 'ap
 
 		let payload;
 
-		if (contentType === 'application/x-www-form-urlencoded') {
+		if (headers?.["Content-Type"] === 'application/x-www-form-urlencoded') {
 			payload = { [bodyParams["dataKey"]]: JSON.stringify(data), ...bodyParams };
 			delete payload.dataKey;
 			request.body = querystring.stringify(payload);
@@ -47,18 +45,16 @@ async function makePostRequest(url, data, searchParams = null, contentType = 'ap
 		}
 		const response = await fetch(requestUrl, request);
 
-		  // Check for non-2xx responses and log them
-		  if (!response.ok) {
-            console.error('Response Status:', response.status);
-            console.error('Response Text:', await response.text());
-			debugger;          
-        }
+		// Check for non-2xx responses and log them
+		if (!response.ok) {
+			console.error('Response Status:', response.status);
+			console.error('Response Text:', await response.text());
+			debugger;
+		}
 
 		let responseBody = await response.text();
 		if (u.isJSONStr(responseBody)) return JSON.parse(responseBody);
-		else return responseBody;
-		
-		return responseData;
+		else return responseBody;		
 
 	} catch (error) {
 		console.error("Error making POST request:", error);
@@ -92,10 +88,10 @@ async function main(PARAMS) {
 		url = "",
 		batchSize = 100,
 		concurrency = 10,
-		data = null,
-		bodyParams = null,
-		searchParams = null,
-		contentType = 'application/json'  //'application/x-www-form-urlencoded'
+		data = undefined,
+		bodyParams = undefined,
+		searchParams = undefined,
+		headers = undefined
 	} = PARAMS;
 
 	const queue = new RunQueue({
@@ -108,7 +104,7 @@ async function main(PARAMS) {
 
 	batches.forEach((batch, index) => {
 		queue.add(0, async () => {
-			const response = await makePostRequest(url, batch, searchParams, contentType, bodyParams);
+			const response = await makePostRequest(url, batch, searchParams, headers, bodyParams);
 			responses.push(response);
 
 			// Progress bar
