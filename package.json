@@ -4,7 +4,7 @@
   "description": "send data to tools easily",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "AK",
   "license": "ISC",
@@ -13,7 +13,10 @@
     "chance": "^1.1.11",
     "dotenv": "^16.4.5",
     "fetch-retry": "^5.0.6",
-    "make-mp-data": "^1.0.9",
+    "make-mp-data": "^1.0.11",
     "run-queue": "^2.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

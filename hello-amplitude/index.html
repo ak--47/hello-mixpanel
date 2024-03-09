@@ -5,54 +5,38 @@
 	<meta charset="utf-8">
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1">
-	<title>mixpanel demo</title>
-	<!-- MIXPANEL SDK -->
-	<script type="text/javascript">
-		const MIXPANEL_TOKEN = `MIXPANEL_TOKEN`;
-		// const PROXY_URL = `https://express-proxy-lmozz6xkha-uc.a.run.app`
-		// const PROXY_URL = `http://localhost:8080`
-		// const MIXPANEL_CUSTOM_LIB_URL = `${PROXY_URL}/lib.min.js`;
+	<title>amplitude demo</title>
 
-		// MIXPANEL!!!
-		(function (f, b) {
-			if (!b.__SV) {
-				var e, g, i, h; window.mixpanel = b; b._i = []; b.init = function (e, f, c) {
-					function g(a, d) { var b = d.split("."); 2 == b.length && (a = a[b[0]], d = b[1]); a[d] = function () { a.push([d].concat(Array.prototype.slice.call(arguments, 0))); }; } var a = b; "undefined" !== typeof c ? a = b[c] = [] : c = "mixpanel"; a.people = a.people || []; a.toString = function (a) { var d = "mixpanel"; "mixpanel" !== c && (d += "." + c); a || (d += " (stub)"); return d; }; a.people.toString = function () { return a.toString(1) + ".people (stub)"; }; i = "disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
-					for (h = 0; h < i.length; h++)g(a, i[h]); var j = "set set_once union unset remove delete".split(" "); a.get_group = function () { function b(c) { d[c] = function () { call2_args = arguments; call2 = [c].concat(Array.prototype.slice.call(call2_args, 0)); a.push([e, call2]); }; } for (var d = {}, e = ["get_group"].concat(Array.prototype.slice.call(arguments, 0)), c = 0; c < j.length; c++)b(j[c]); return d; }; b._i.push([e, f, c]);
-				}; b.__SV = 1.2; e = f.createElement("script"); e.type = "text/javascript"; e.async = !0; e.src = "undefined" !== typeof MIXPANEL_CUSTOM_LIB_URL ? MIXPANEL_CUSTOM_LIB_URL : "file:" === f.location.protocol && "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//) ? "https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js" : "//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js"; g = f.getElementsByTagName("script")[0]; g.parentNode.insertBefore(e, g);
-			}
-		})(document, window.mixpanel || []);
+	<script type="text/javascript">
+		const AMPLITUDE_API_KEY = `434dadc8cd8ee087ec0da0e360a4a11a`;
+		!function () { "use strict"; !function (e, t) { var n = e.amplitude || { _q: [], _iq: {} }; if (n.invoked) e.console && console.error && console.error("Amplitude snippet has been loaded."); else { var r = function (e, t) { e.prototype[t] = function () { return this._q.push({ name: t, args: Array.prototype.slice.call(arguments, 0) }), this; }; }, s = function (e, t, n) { return function (r) { e._q.push({ name: t, args: Array.prototype.slice.call(n, 0), resolve: r }); }; }, o = function (e, t, n) { e._q.push({ name: t, args: Array.prototype.slice.call(n, 0) }); }, i = function (e, t, n) { e[t] = function () { if (n) return { promise: new Promise(s(e, t, Array.prototype.slice.call(arguments))) }; o(e, t, Array.prototype.slice.call(arguments)); }; }, a = function (e) { for (var t = 0; t < g.length; t++)i(e, g[t], !1); for (var n = 0; n < m.length; n++)i(e, m[n], !0); }; n.invoked = !0; var u = t.createElement("script"); u.type = "text/javascript", u.integrity = "sha384-Gzu/3zjG7uZ1G0TIW6BIGIzZHB61u7328yVnZUz4t1dNE/n/dSnABKbOJ+jw6Bnu", u.crossOrigin = "anonymous", u.async = !0, u.src = "https://cdn.amplitude.com/libs/analytics-browser-2.5.2-min.js.gz", u.onload = function () { e.amplitude.runQueuedFunctions || console.log("[Amplitude] Error: could not load SDK"); }; var c = t.getElementsByTagName("script")[0]; c.parentNode.insertBefore(u, c); for (var l = function () { return this._q = [], this; }, p = ["add", "append", "clearAll", "prepend", "set", "setOnce", "unset", "preInsert", "postInsert", "remove", "getUserProperties"], d = 0; d < p.length; d++)r(l, p[d]); n.Identify = l; for (var f = function () { return this._q = [], this; }, v = ["getEventProperties", "setProductId", "setQuantity", "setPrice", "setRevenue", "setRevenueType", "setEventProperties"], y = 0; y < v.length; y++)r(f, v[y]); n.Revenue = f; var g = ["getDeviceId", "setDeviceId", "getSessionId", "setSessionId", "getUserId", "setUserId", "setOptOut", "setTransport", "reset", "extendSession"], m = ["init", "add", "remove", "track", "logEvent", "identify", "groupIdentify", "setGroup", "revenue", "flush"]; a(n), n.createInstance = function (e) { return n._iq[e] = { _q: [] }, a(n._iq[e]), n._iq[e]; }, e.amplitude = n; } }(window, document); }();
+
+		amplitude.init(AMPLITUDE_API_KEY);
+		console.log('https://www.docs.developers.amplitude.com/data/sdks/browser-2/#tracking-an-event')
+
 	</script>
 </head>
 
 <body>
 	<button id="clickMe">click me</button>
 	<button id="dontClickMe">don't click me</button>
+	<a href="https://www.docs.developers.amplitude.com/data/sdks/browser-2/#tracking-an-event">DOCS</a>
+	
+	<br/><br/>
 
+	<pre>
+amplitude.init(AMPLITUDE_API_KEY, 'user@amplitude.com');
+const eventProperties = {
+    buttonColor: 'primary',
+};
 
-	<script>		
-		// setup
-		// ? https://github.com/mixpanel/mixpanel-js/blob/master/doc/readme.io/javascript-full-api-reference.md#mixpanel
-		mixpanel.init("", {
-			// api_host: PROXY_URL,	
-					
-			ignore_dnt: true,
+const identifyObj = new Identify();
+identifyObj.set('location', 'LAX');
+amplitude.identify(identifyObj);
 
-			//dev options
-			debug: true,
-			batch_flush_interval_ms: 0
-		});
+amplitude.track('Button Clicked', eventProperties);
 
-
-		//example tracking code
-		document.querySelector('#clickMe').addEventListener('click', () => {
-			mixpanel.track('click me button');
-		});
-		document.querySelector('#dontClickMe').addEventListener('click', () => {
-			mixpanel.track("don't click me button");
-		});
-
-	</script>
+	</pre>
 </body>
 
 </html>

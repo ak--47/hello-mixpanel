@@ -1,5 +1,13 @@
 {
-	"cSpell.words": [
-		"unparse"
+
+	"jest.jestCommandLine": "npm run test --",
+	"jest.autoRun": "off",
+	"jest.runAllTestsFirst": false,
+	"jest.autoEnable": false,
+	"jest.showCoverageOnLoad": false,
+	"jest.disabledWorkspaceFolders": [
+		"**/node_modules/**",
+		"**/hello-ionic/**",
+		"**/*.spec.ts",
 	]
 }

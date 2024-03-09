@@ -1,13 +1,13 @@
 const batchQueue = require('../batcher.js');
-const dataSpec = require('../spec.js');
+const dataSpec = require('../dungeon.js');
 const { generate } = require('make-mp-data');
 const u = require('ak-tools');
-require('dotenv').config({ path: "./" });
+require('dotenv').config({ path: "../.env", debug: true, "encoding": "utf8"});
 
 // ? https://www.docs.developers.amplitude.com/analytics/apis/http-v2-api/#upload-request
-async function main() {
+async function main(spec = dataSpec) {
 	console.log("\nGenerating Amplitude data...\n\n");
-	const data = await generate(dataSpec);
+	const data = await generate(spec);
 	const { eventData, userProfilesData } = data;
 	const AMP_EVENTS_ENDPOINT = `https://api.amplitude.com/2/httpapi`;
 	const AMP_USERS_ENDPOINT = `https://api2.amplitude.com/identify`;
@@ -40,7 +40,7 @@ async function main() {
 	const eventsSent = eventResponses.reduce((acc, res) => acc + res.events_ingested, 0);
 	console.log(`\n... sent ${u.comma(eventsSent)} events to Amplitude.`);
 
-	
+
 	const amplitudeUsers = userProfilesData.map(user => {
 		const ampUser = {
 			user_id: user.distinct_id,
@@ -65,13 +65,25 @@ async function main() {
 
 	console.log(`\nsending ${u.comma(amplitudeUsers.length)} users to Amplitude...\n`);
 	const userResponses = await batchQueue(usersJobConfig);
-	const usersSent = userResponses.reduce((acc, res) => acc + res.events_ingested, 0);
 	console.log(`\n... sent ${u.comma(amplitudeUsers.length)} events to Amplitude.`);
 
-
-	debugger;
+	return {
+		users: userResponses,
+		events: eventResponses
+	};
 }
 
+if (require.main === module) {
+	main()
+		.then(() => {
+			console.log("\n\nDone.\n\n");
+		})
+		.catch((err) => {
+			debugger;
+		})
+		.finally(() => console.log(`\n\n\t... your lucky numbers are ${u.rand(1, 42)} ${u.rand(1, 42)} ${u.rand(1, 42)}`));
+}
+else {
+	module.exports = main;
+}
 
-
-main().then(console.log).catch(console.error).finally(() => console.log("Done."));

@@ -2,11 +2,14 @@ const Chance = require('chance');
 const chance = new Chance();
 const { weightedRange, makeProducts, date } = require('make-mp-data');
 
+/** @typedef {import('./types').Config} JobConfig */
+
+/** @type {JobConfig} */
 const config = {
 	seed: "foo bar baz",
 	numDays: 30, //how many days worth of data
 	numEvents: 10000, //how many events
-	numUsers: 250, //how many users		
+	numUsers: 250, //how many users			
 	events: [
 		{
 			"event": "checkout",
