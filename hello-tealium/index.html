@@ -31,6 +31,22 @@
 		})
 
 	</script>
+		<h1>👋 hello tealium!</h1>
+	<h2>overview</h2>
+	<pre>
+		var utag_data = {
+			"tealium_event": "page_view",
+			"foo": "bar"
+		};
+		document.cookie = "utagdb=true";
+
+		clickMe.addEventListener('click', () => {
+			utag.link({
+				"tealium_event": "button_click",
+				"baz": "qux"
+			});
+		})
+	</pre>
 </body>
 
 </html>

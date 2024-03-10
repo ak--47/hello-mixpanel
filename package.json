@@ -1,10 +1,11 @@
 {
   "name": "hello-mixpanel",
   "version": "1.0.0",
-  "description": "send data to tools easily",
+  "description": "send data to tools... easily",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+	"start": "npx serve ."
   },
   "author": "AK",
   "license": "ISC",

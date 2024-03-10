@@ -53,7 +53,7 @@ async function main(spec = dataSpec) {
 
 
 	const mParticleData = userProfilesData.map(user => {
-		const mpUserEvents = {
+		const mpParticleUserAndEvents = {
 			"events": [],
 			"device_info": {},
 			"source_request_id": user.distinct_id,
@@ -66,56 +66,62 @@ async function main(spec = dataSpec) {
 			"context": {},
 			"mpid": user.distinct_id,
 		};
+		const uuid = user.distinct_id;
 		delete user.distinct_id;
-		mpUserEvents.user_attributes = { ...user };		
-		return mpUserEvents;
+		mpParticleUserAndEvents.user_attributes = { ...user };
+		eventData;
+		const userEvents = eventData.filter(event => event.distinct_id === uuid).map((e) => {
+
+			const mparticleEvent = {
+				"data": {
+					"event_id": randInt64(),
+					"event_num": 0,
+					"session_id": randInt64(),
+					"timestamp_unixtime_ms": e.time * 1000,
+					"location": {},
+					"device_current_state": {},
+					"custom_attributes": {},
+					"custom_flags": {}
+				},
+				"event_type": "custom_event"
+			};
+
+			delete e.event;
+			delete e.distinct_id;
+			delete e.time;
+			mparticleEvent.data.custom_attributes = { ...e };
+			return mparticleEvent;
+
+		});
+		
+		mpParticleUserAndEvents.events = userEvents;
+		return mpParticleUserAndEvents;
 	});
+
+
+
+
+
 
 	const usersJobConfig = {
 		url: MIXPANEL_USERS_ENDPOINT,
 		data: mParticleData,
-		batchSize: 200,
+		batchSize: 2,
 		concurrency: 5,
-	};
-
-	console.log(`\nsending ${u.comma(mParticleData.length)} users to Mixpanel...\n`);
-	const userResponses = await batchQueue(usersJobConfig);
-	console.log(`\n... sent ${u.comma(mParticleData.length)} users to Mixpanel.`);
-
-
-	const mixpanelEvents = eventData.map(event => {
-		const mixpanelEvent = {
-			event: event.event,
-		};
-		delete event.event;
-
-		mixpanelEvent.properties = { ...event };
-		return mixpanelEvent;
-	});
-
-	/** @type {BatchReqConfig} */
-	const eventsJobConfig = {
-		url: MPARTICLE_EVENT_ENDPOINT,
-		data: mixpanelEvents,
-		batchSize: 2000,
-		concurrency: 10,
-		searchParams: {
-			verbose: 1
-		},
 		headers: {
 			authorization: `Basic ${Buffer.from(`${MPARTICLE_API_KEY}:${MPARTICLE_API_SECRET}`).toString('base64')}`,
 			'Content-Type': 'application/json'
 		},
 	};
 
-	console.log(`sending ${u.comma(mixpanelEvents.length)} events to Mixpanel...\n`);
-	const eventResponses = await batchQueue(eventsJobConfig);
-	console.log(`\n... sent ${u.comma(mixpanelEvents.length)} events to Mixpanel.`);
+	console.log(`\nsending ${u.comma(mParticleData.length)} users and ${u.comma(eventData.length)} events to mParticle...\n`);
+	const userResponses = await batchQueue(usersJobConfig);
+	console.log(`\n... sent ${u.comma(mParticleData.length)} users and ${u.comma(eventData.length)} events to mParticle.`);
 
 
 	return {
 		users: userResponses,
-		events: eventResponses
+		events: []
 	};
 }
 
@@ -133,3 +139,18 @@ else {
 	module.exports = main;
 }
 
+
+
+function randInt64() {
+    // Generate a random 32-bit integer for high bits
+    let high = Math.floor(Math.random() * Math.pow(2, 32));
+    
+    // Generate a random 32-bit integer for low bits
+    let low = Math.floor(Math.random() * Math.pow(2, 32));
+    
+    // Combine the high and low bits
+    // Note: This representation is not a true 64-bit integer but a simulation
+    let combined = high * Math.pow(2, 32) + low;
+
+    return combined;
+}

@@ -4,6 +4,7 @@ const amplitude = require("./hello-amplitude/import.js");
 const heap = require("./hello-heap/import.js");
 const mixpanel = require("./hello-javascript/import.js");
 const pendo = require("./hello-pendo/import.js");
+const segment = require("./hello-segment/import.js");
 
 /** @typedef {import('./types').Dungeon} JobConfig */
 
@@ -68,6 +69,20 @@ describe("importers", () => {
 			expect(events.every(r => r.status === 200 && r.statusText === "OK")).toBe(true);
 			expect(events.length).toBeGreaterThan(0);
 			expect(users.length).toBe(0);
+
+		},
+		longTimeout
+	);
+
+	test(
+		"segment",
+		async () => {
+			const data = await segment(baseConfig);
+			const { events, users } = data;
+			expect(events.every(r => r.success === true )).toBe(true);
+			expect(users.every(r => r.success === true )).toBe(true);
+			expect(events.length).toBeGreaterThan(0);
+			expect(users.length).toBeGreaterThan(0);
 
 		},
 		longTimeout
