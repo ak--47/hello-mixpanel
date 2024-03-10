@@ -11,6 +11,10 @@
 		"**/*.spec.ts",
 	],
 	"cSpell.words": [
-		"PENDO"
+		"customerid",
+		"MPARTICLE",
+		"mpid",
+		"PENDO",
+		"unixtime"
 	]
 }

@@ -17,8 +17,12 @@
 	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer',GOOGLE_TAG_MANAGER_ID);</script>
+	})(window,document,'script','dataLayer',GOOGLE_TAG_MANAGER_ID);
+	
+	console.log('https://developers.google.com/tag-manager/devguide')
+	</script>
 	<!-- End Google Tag Manager -->
+	
 </head>
 
 <body>
@@ -29,10 +33,20 @@
 	<button id="clickMe">click me</button>
 	<button id="dontClickMe">don't click me</button>
 
-
-	<script>		
-		
-	</script>
+	<a href="https://developers.google.com/tag-manager/devguide">DOCS</a>
+<h2></h2>
+<pre>{
+	event: "checkout_button",
+	gtm: {
+	  uniqueEventId: 2,
+	  start: 1639524976560,
+	  scrollThreshold: 90,
+	  scrollUnits: "percent",
+	  scrollDirection: "vertical",
+	  triggers: "1_27"
+	},
+	value: "120"
+  }</pre>
 </body>
 
 </html>

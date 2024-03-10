@@ -54,6 +54,7 @@ async function makePostRequest(url, data, searchParams = null, headers = { "Cont
 
 		let responseBody = await response.text();
 		if (u.isJSONStr(responseBody)) return JSON.parse(responseBody);
+		else if (responseBody === "") return { status: response.status, statusText: response.statusText };
 		else return responseBody;
 
 	} catch (error) {

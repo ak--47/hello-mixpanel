@@ -65,7 +65,7 @@ describe("importers", () => {
 		async () => {
 			const data = await pendo({ ...baseConfig, numEvents: 50, numUsers: 2 });
 			const { events, users } = data;
-			expect(events.every(t => t === "")).toBe(true);
+			expect(events.every(r => r.status === 200 && r.statusText === "OK")).toBe(true);
 			expect(events.length).toBeGreaterThan(0);
 			expect(users.length).toBe(0);
 

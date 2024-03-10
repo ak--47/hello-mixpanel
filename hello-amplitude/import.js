@@ -2,7 +2,7 @@ const batchQueue = require('../batcher.js');
 const dataSpec = require('../dungeon.js');
 const { generate } = require('make-mp-data');
 const u = require('ak-tools');
-require('dotenv').config({ path: "../.env", debug: true, "encoding": "utf8" });
+require('dotenv').config({ path: "../.env", debug: true, "encoding": "utf8", override: false });
 
 /** @typedef {import('../types').BatchRequestConfig} BatchReqConfig */
 /** @typedef {import('../types').Dungeon} DungeonConfig */

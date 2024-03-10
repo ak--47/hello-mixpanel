@@ -13,10 +13,12 @@ const PENDO_EVENT_SECRET = process.env.PENDO_EVENT_SECRET;
 const PENDO_EVENT_ENDPOINT = `https://app.pendo.io/data/track`;
 
 // ? https://engageapi.pendo.io/#3ec5d561-6094-4336-8a33-0a6c23041797
-
+/**
+ * @param  {DungeonConfig} spec=dataSpec
+ */
 async function main(spec = dataSpec) {
 	console.log("\nGenerating Pendo data...\n\n");
-	const data = await generate(spec);
+	const data = await generate({...spec, numUsers: 10, numEvents: 100 });
 	const { eventData, userProfilesData } = data;
 
 	// var mock = {
@@ -39,7 +41,7 @@ async function main(spec = dataSpec) {
 			type: "track",
 			event: event.event,
 			visitorId: event.distinct_id,
-			timestamp: event.time,
+			timestamp: event.time * 1000, // Pendo expects milliseconds
 			properties: {},
 			context: {}				
 		};
@@ -56,7 +58,7 @@ async function main(spec = dataSpec) {
 		url: PENDO_EVENT_ENDPOINT,
 		data: pendoEvents,
 		batchSize: 1,
-		concurrency: 10,
+		concurrency: 20,
 		searchParams: {	},
 		headers: {
 			'Content-Type': 'application/json',

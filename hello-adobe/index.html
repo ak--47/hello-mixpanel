@@ -6,29 +6,119 @@
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1">
 	<title>adobe demo</title>
-	<script type="text/javascript">
-		
+	<script>
+		!function (n, o) {
+			o.forEach(function (o) {
+				n[o] || ((n.__alloyNS = n.__alloyNS ||
+					[]).push(o), n[o] = function () {
+						var u = arguments; return new Promise(
+							function (i, l) { n[o].q.push([i, l, u]); });
+					}, n[o].q = []);
+			});
+		}(window, ["alloy"]);
 	</script>
+	<script src="https://cdn1.adoberesources.net/alloy/2.19.1/alloy.min.js"
+		async></script>
+
 </head>
 
 <body>
 	<button id="clickMe">click me</button>
 	<button id="dontClickMe">don't click me</button>
+	<a
+		href="https://experienceleague.adobe.com/docs/experience-platform/web-sdk/commands/sendevent/overview.html?lang=en">DOCS</a>
 
-	<!-- TODO -->
+	<script>
+		const edgeConfigId = "ebebf826-a01f-4458-8cec-ef61de241c93";
+		const orgId = "ADB3LETTERSANDNUMBERS@AdobeOrg";
+		const datastreamId = "0dada9f4-fa94-4c9c-8aaf-fdbac6c56287";
+		const edgeDomain = "data.example.com";
+		alloy("configure", {
+			"edgeConfigId": edgeConfigId,
+			"orgId": orgId,
+			"clickCollectionEnabled": true,
+			"context": ["web", "device", "environment", "placeContext", "highEntropyUserAgentHints"],
+			"debugEnabled": true,
+			"defaultConsent": "pending",
+			"downloadLinkQualifier": "\.(exe|zip|wav|mp3|mov|mpg|avi|wmv|pdf|doc|docx|xls|xlsx|ppt|pptx)$",
+			"edgeBasePath": "ee",
+			"edgeConfigOverrides": { "datastreamId": datastreamId },
+			"edgeDomain": edgeDomain,
+			"idMigrationEnabled": false,
+			"onBeforeEventSend": function (content) {
+				if (content.xdm.web?.webReferrer) delete content.xdm.web.webReferrer.URL;
+			},
+			"onBeforeLinkClickSend": function (content) {
+				content.xdm.web.webPageDetails.URL = "https://example.com/current.html";
+			},
+			"prehidingStyle": "#container { opacity: 0 !important }",
+			"targetMigrationEnabled": true,
+			"thirdPartyCookiesEnabled": false
+		});
+		console.log(`https://experienceleague.adobe.com/docs/experience-platform/web-sdk/commands/sendevent/overview.html?lang=en`);
+	</script>
+	<h2>INIT</h2>
 	<pre>
-		amplitude.init(AMPLITUDE_API_KEY, 'user@amplitude.com');
-		const eventProperties = {
-			buttonColor: 'primary',
-		};
-		
-		const identifyObj = new Identify();
-		identifyObj.set('location', 'LAX');
-		amplitude.identify(identifyObj);
-		
-		amplitude.track('Button Clicked', eventProperties);
-		
+		alloy("configure", {
+			"edgeConfigId": "ebebf826-a01f-4458-8cec-ef61de241c93",
+			"orgId": "ADB3LETTERSANDNUMBERS@AdobeOrg",
+			"clickCollectionEnabled": false,
+			"context": ["web", "device", "environment", "placeContext", "highEntropyUserAgentHints"],
+			"debugEnabled": true,
+			"defaultConsent": "pending",
+			"downloadLinkQualifier": "\.(exe|zip|wav|mp3|mov|mpg|avi|wmv|pdf|doc|docx|xls|xlsx|ppt|pptx)$",
+			"edgeBasePath": "ee",
+			"edgeConfigOverrides": { "datastreamId": "0dada9f4-fa94-4c9c-8aaf-fdbac6c56287" },
+			"edgeDomain": "data.example.com",
+			"idMigrationEnabled": false,
+			"onBeforeEventSend": function(content) {
+			  if(content.xdm.web?.webReferrer) delete content.xdm.web.webReferrer.URL;
+			},
+			"onBeforeLinkClickSend": function(content) {
+			  content.xdm.web.webPageDetails.URL = "https://example.com/current.html";
+			},
+			"prehidingStyle": "#container { opacity: 0 !important }",
+			"targetMigrationEnabled": true,
+			"thirdPartyCookiesEnabled": false
+		  });		  
 			</pre>
+	<h2>SEND EVENT</h2>
+	<pre>
+				alloy("sendEvent", {
+					"data": dataObject,
+					"documentUnloading": true,
+					"edgeConfigOverrides": { "datastreamId": "0dada9f4-fa94-4c9c-8aaf-fdbac6c56287" },
+					"renderDecisions": true,
+					"type": "commerce.purchases",
+					"xdm": adobeDataLayer.getState(reference) //?
+				  });
+				  
+			</pre>
+
+	<pre>
+				alloy("sendEvent",{
+					"xdm":{
+					  "commerce":{
+						"productViews":{
+						  "value":1
+						}
+					  },
+					  "productListItems":[
+						{
+						  "SKU":"HT105",
+						  "name":"Large field hat",
+						},
+						{
+						  "SKU":"HT104",
+						  "name":"Small field hat",
+						}
+					  ]
+					}
+				  });
+				  
+			</pre>
+
+
 </body>
 
 </html>

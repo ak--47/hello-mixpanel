@@ -1,0 +1,11 @@
+# this is a sample .env file; you should create your own .env file with your own creds
+AMPLITUDE_API_TOKEN=foo
+AMPLITUDE_API_KEY=foo
+GA4_MEASUREMENT_ID=foo
+GOOGLE_TAG_MANAGER_ID=foo
+HEAP_APP_ID=foo
+MIXPANEL_TOKEN=foo
+MPARTICLE_API_KEY=foo
+MPARTICLE_API_SECRET=foo
+PENDO_API_KEY=foo
+PENDO_EVENT_SECRET=foo
