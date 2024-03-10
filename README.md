@@ -12,6 +12,11 @@ you can use this repo to test out different analytics tools, or to compare how d
 
 - cloning the repo
 
+```bash
+git clone https://github.com/ak--47/hello-mixpanel.git
+cd hello-mixpanel
+```
+
 - install the dependencies (one time) with:
 ```bash
 npm install
