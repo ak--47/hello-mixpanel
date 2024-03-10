@@ -2,7 +2,7 @@ const batchQueue = require('../batcher.js');
 const dataSpec = require('../dungeon.js');
 const { generate } = require('make-mp-data');
 const u = require('ak-tools');
-require('dotenv').config({ path: "../.env", debug: true, "encoding": "utf8" });
+require('dotenv').config({ path: "../.env", debug: false, "encoding": "utf8" });
 
 /** @typedef {import('../types.js').BatchRequestConfig} BatchReqConfig */
 /** @typedef {import('../types.js').Dungeon} DungeonConfig */
@@ -85,7 +85,7 @@ if (require.main === module) {
 		.catch((err) => {
 			debugger;
 		})
-		.finally(() => console.log(`\n\n\t... your lucky numbers are ${u.rand(1, 42)} ${u.rand(1, 42)} ${u.rand(1, 42)}\n\n`));
+		.finally(() => console.log(`\n\n\t... your lucky numbers are \t${u.rand(1, 42)} \t${u.rand(1, 42)} \t${u.rand(1, 42)}\n\n`));
 }
 else {
 	module.exports = main;
