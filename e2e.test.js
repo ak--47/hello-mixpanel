@@ -5,6 +5,7 @@ const heap = require("./hello-heap/import.js");
 const mixpanel = require("./hello-javascript/import.js");
 const pendo = require("./hello-pendo/import.js");
 const segment = require("./hello-segment/import.js");
+const mparticle = require("./hello-mparticle/import.js");
 
 /** @typedef {import('./types').Dungeon} JobConfig */
 
@@ -87,3 +88,18 @@ test(
 	},
 	longTimeout
 );
+
+
+test(
+	"mparticle",
+	async () => {
+		const data = await mparticle(baseConfig);
+		const { events, users } = data;
+		expect(users.every(r => r.status === 202 && r.statusText === 'Accepted')).toBe(true);		
+		expect(events.length).toBeGreaterThan(0);
+		expect(users.length).toBeGreaterThan(0);
+
+	},
+	longTimeout
+);
+

@@ -52,9 +52,14 @@ async function makePostRequest(url, data, searchParams = null, headers = { "Cont
 			debugger;
 		}
 
+		// Extract response headers
+		const resHeaders = Object.fromEntries(response.headers.entries());
+		const status = response.status;
+		const statusText = response.statusText;
+
 		let responseBody = await response.text();
 		if (u.isJSONStr(responseBody)) return JSON.parse(responseBody);
-		else if (responseBody === "") return { status: response.status, statusText: response.statusText };
+		else if (responseBody === "" || responseBody === "0") return { status, statusText, ...resHeaders };
 		else return responseBody;
 
 	} catch (error) {
@@ -65,6 +70,7 @@ async function makePostRequest(url, data, searchParams = null, headers = { "Cont
 }
 
 function batchData(data, batchSize, bodyParams = null) {
+	if (Array.isArray(data) === false) return [data];
 	const batches = [];
 	for (let i = 0; i < data.length; i += batchSize) {
 		if (batchSize === 1) {
