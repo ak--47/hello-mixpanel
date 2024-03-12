@@ -25,7 +25,8 @@ const events = [
 			amount: weightedRange(5, 500, 1000, .25),
 			rating: weightedRange(1, 5),
 			reviews: weightedRange(0, 35),
-			product_id: weightedRange(1, 1000)
+			product_id: weightedRange(1, 1000),
+			category: ["Books", "Movies", "Music", "Games", "Electronics", "Computers", "Garden & Tools", "Toys", "Kids", "Baby"]
 		}
 	},
 	{
@@ -40,7 +41,8 @@ const events = [
 		"weight": 8,
 		"properties": {
 			product_id: weightedRange(1, 1000),
-			colors: ["light", "dark", "custom", "dark"]
+			colors: ["light", "dark", "custom", "dark"],
+			category: ["Books", "Movies", "Music", "Games", "Electronics", "Computers", "Garden & Tools", "Toys", "Kids", "Baby"]
 		}
 	},
 	{
@@ -48,7 +50,8 @@ const events = [
 		"weight": 5,
 		"properties": {
 			product_id: weightedRange(1, 1000),
-			colors: ["light", "dark", "custom", "dark"]
+			colors: ["light", "dark", "custom", "dark"],
+			category: ["Books", "Movies", "Music", "Games", "Electronics", "Computers", "Garden & Tools", "Toys", "Kids", "Baby"]
 		}
 	},
 	{
@@ -65,6 +68,8 @@ const events = [
 const superProps = {
 	platform: ["app", "web"],
 	device: ["desktop", "laptop", "tablet", "phone"],
+	browser: ["chrome", "firefox", "safari", "edge", "ie", "opera"],
+	operatingSystem: ["macOS", "Windows", "iOS", "Android", "Linux"],
 };
 
 /*
