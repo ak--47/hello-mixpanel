@@ -1,10 +1,11 @@
-const batchQueue = require('../batcher.js');
+const batchQueue = require('ak-fetch');
 const dataSpec = require('../dungeon.js');
 const { generate } = require('make-mp-data');
 const u = require('ak-tools');
 require('dotenv').config({ path: "../.env", debug: false, "encoding": "utf8", override: false });
 
-/** @typedef {import('../types').BatchRequestConfig} BatchReqConfig */
+
+/** @typedef {import('ak-fetch').BatchRequestConfig} BatchReqConfig */
 /** @typedef {import('../types').Dungeon} DungeonConfig */
 
 const AMP_EVENTS_ENDPOINT = `https://api.amplitude.com/2/httpapi`;
