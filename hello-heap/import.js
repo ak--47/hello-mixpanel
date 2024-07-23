@@ -3,6 +3,7 @@ const dataSpec = require('../dungeon.js');
 const { generate } = require('make-mp-data');
 const u = require('ak-tools');
 require('dotenv').config({ path: "../.env", debug: false, "encoding": "utf8" });
+const dayjs = require('dayjs');
 
 /** @typedef {import('ak-fetch').BatchRequestConfig} BatchReqConfig */
 /** @typedef {import('../types').Dungeon} DungeonConfig */
@@ -20,17 +21,19 @@ async function main(spec = dataSpec) {
 
 	const heapEvents = eventData.map(event => {
 		const heapEvent = {
-			identity: event.distinct_id,
+			identity: event.$user_id,
 			event: event.event,
-			timestamp: new Date(event.time * 1000).toISOString(),
+			timestamp: event.time,
 		};
 
+		
 		delete event.distinct_id;
 		delete event.$source;
 		delete event.time;
 		delete event.event;
 
 		heapEvent.properties = { ...event };
+		
 		return heapEvent;
 	});
 

@@ -3,6 +3,7 @@ const dataSpec = require('../dungeon.js');
 const { generate } = require('make-mp-data');
 const u = require('ak-tools');
 require('dotenv').config({ path: "../.env", debug: false, "encoding": "utf8", override: false });
+const dayjs = require('dayjs');
 
 
 /** @typedef {import('ak-fetch').BatchRequestConfig} BatchReqConfig */
@@ -24,14 +25,17 @@ async function main(spec = dataSpec) {
 
 	const amplitudeEvents = eventData.map(event => {
 		const ampEvent = {
-			user_id: event.distinct_id,
+			user_id: event.$user_id,
 			event_type: event.event,
 			...event,
 		};
-		delete ampEvent.distinct_id;
+		delete ampEvent.$user_id;
 		delete ampEvent.event;
 		delete ampEvent.$source;
+		ampEvent.time = dayjs(event.time).unix();
 		return ampEvent;
+
+		
 	});
 
 	/** @type {BatchReqConfig} */

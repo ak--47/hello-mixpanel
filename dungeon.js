@@ -1,7 +1,7 @@
 const Chance = require('chance');
 const chance = new Chance();
 const { weightedRange, makeProducts, date } = require('make-mp-data');
-/** @typedef {import('./types').Dungeon} JobConfig */
+/** @typedef {import('make-mp-data').Config} JobConfig */
 
 /*
 event properties should be an array or a function reference
@@ -91,6 +91,8 @@ const config = {
 	numEvents: 10000, //how many events
 	numUsers: 250, //how many users			
 	events,
+	anonIds: false,
+	sessionIds: true,
 	superProps,
 	userProps,
 	scdProps: {
