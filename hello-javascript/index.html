@@ -32,10 +32,11 @@
 
 
 	<script>
+		const PROXY_URL = `https://us-central1-mixpanel-gtm-training.cloudfunctions.net/mp-sdk-to-bq`
 		// setup
 		// ? https://github.com/mixpanel/mixpanel-js/blob/master/doc/readme.io/javascript-full-api-reference.md#mixpanel
 		mixpanel.init(MIXPANEL_TOKEN, {
-			// api_host: PROXY_URL,	
+			api_host: PROXY_URL,	
 
 			ignore_dnt: true,
 			record_sessions_percent: 100,

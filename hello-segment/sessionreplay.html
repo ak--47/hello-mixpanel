@@ -9,7 +9,7 @@
 
 	<script type="text/javascript">
 		const SEGMENT_WRITE_KEY = `pRNMnr0PfOapYouZ3V2v9oHoZGDb80pA`;
-		const MIXPANEL_TOKEN = `13db33d0ae3ce03c98c888aef09c842b`
+		const MIXPANEL_TOKEN = `13db33d0ae3ce03c98c888aef09c842b`;
 		!function () {
 			var i = "analytics", analytics = window[i] = window[i] || []; if (!analytics.initialize) if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice."); else {
 				analytics.invoked = !0; analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "screen", "once", "off", "on", "addSourceMiddleware", "addIntegrationMiddleware", "setAnonymousId", "addDestinationMiddleware", "register"]; analytics.factory = function (e) { return function () { if (window[i].initialized) return window[i][e].apply(window[i], arguments); var n = Array.prototype.slice.call(arguments); if (["track", "screen", "alias", "group", "page", "identify"].indexOf(e) > -1) { var c = document.querySelector("link[rel='canonical']"); n.push({ __t: "bpc", c: c && c.getAttribute("href") || void 0, p: location.pathname, u: location.href, s: location.search, t: document.title, r: document.referrer }); } n.unshift(e); analytics.push(n); return analytics; }; }; for (var n = 0; n < analytics.methods.length; n++) { var key = analytics.methods[n]; analytics[key] = analytics.factory(key); } analytics.load = function (key, n) { var t = document.createElement("script"); t.type = "text/javascript"; t.async = !0; t.setAttribute("data-global-segment-analytics-key", i); t.src = "https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js"; var r = document.getElementsByTagName("script")[0]; r.parentNode.insertBefore(t, r); analytics._loadOptions = n; }; analytics._writeKey = "RT8UgSD2nynW0HbEg6djCUWuEvD2kOQA";; analytics.SNIPPET_VERSION = "5.2.0";
@@ -20,12 +20,12 @@
 		console.log('https://segment.com/docs/connections/sources/catalog/libraries/website/javascript/');
 
 		analytics.ready(function () {
-			queryIds('segment loaded');
+			// queryIds('segment loaded');
 		});
 		analytics.addSourceMiddleware(({ payload, next, integrations }) => {
-			const type = payload.type()?.toLowerCase();			
+			const type = payload.type()?.toLowerCase();
 			if (type === 'track' || type === 'page') {
-				queryIds('segment track/page call');
+				// queryIds('segment track/page call');
 				if (window.mixpanel) {
 					const segmentDeviceId = payload.obj.anonymousId;
 					mixpanel.register({ $device_id: segmentDeviceId });
@@ -35,27 +35,39 @@
 						...payload.obj.properties,
 						...sessionReplayProperties,
 					};
-					queryIds('segment track/page');
+					// queryIds('segment track/page');
+
+					// stop here                  
+					const mixpanelDeviceId = mixpanel.get_property('$device_id');
+					//should be true
+					console.log('is device id same?', segmentDeviceId === mixpanelDeviceId);
+					//should be an object with ids
+					console.log('has replay props?', sessionReplayProperties);
+					//payload should contain ^ props         
+					console.log('replay props in payload?', payload.obj.properties);
 				}
 			}
 			else if (type === 'identify') {
-				queryIds('segment identify call');
+				// queryIds('segment identify call');
 				if (window.mixpanel) {
 					const userId = payload.obj.userId;
 					mixpanel.identify(userId);
-					
+					const mixpanelUserId = mixpanel.get_property('$user_id');
+					//should be true
+					console.log('is user id same?', userId === mixpanelUserId);
+
 				}
 			}
 
 			else {
 				queryIds(`segment middleware ${type}`);
 			}
-			
+
 			next(payload);
 		});
 	</script>
 	<script type="text/javascript">
-		
+
 		// const PROXY_URL = `https://express-proxy-lmozz6xkha-uc.a.run.app`
 		// const PROXY_URL = `http://localhost:8080`
 		// const MIXPANEL_CUSTOM_LIB_URL = `${PROXY_URL}/lib.min.js`;
@@ -131,12 +143,12 @@
 			let mixpanelDeviceId = 'not loaded';
 			let mixpanelDistinctId = 'not loaded';
 			if (analytics && typeof analytics.user === 'function') {
-				 segmentDeviceId = analytics.user().anonymousId();
-				 segmentUserId = analytics.user().id();
+				segmentDeviceId = analytics.user().anonymousId();
+				segmentUserId = analytics.user().id();
 			}
 			if (mixpanel) {
-				 mixpanelDistinctId = mixpanel.get_distinct_id();
-				 mixpanelDeviceId = mixpanel.get_property('$device_id');
+				mixpanelDistinctId = mixpanel.get_distinct_id();
+				mixpanelDeviceId = mixpanel.get_property('$device_id');
 			}
 			console.log(message?.toUpperCase());
 			console.log(`\n\tsegment anonymousId: ${segmentDeviceId}\n\tmixpanel deviceId: ${mixpanelDeviceId}`);
