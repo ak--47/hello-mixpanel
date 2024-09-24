@@ -8,7 +8,7 @@
 	<title>mixpanel demo</title>
 	<!-- MIXPANEL SDK -->
 	<script type="text/javascript">
-		const RUDDER_WRITE_KEY = `2i6IbDB2lK60F14PQXgTvVdN9tp`;
+		const RUDDER_WRITE_KEY = `2i6IbDB2lK60F14PQXgTvVdN9tp` //`2i6IbDB2lK60F14PQXgTvVdN9tp`;
 		const RUDDER_URL = `https://mixpanelahvi.dataplane.rudderstack.com`;
 		// const PROXY_URL = `https://express-proxy-lmozz6xkha-uc.a.run.app`
 		// const PROXY_URL = `http://localhost:8080`
@@ -101,6 +101,20 @@ rudderanalytics.ready(() => {
 
 		rudderanalytics.ready(() => {
 			debugger;
+
+
+			rudderanalytics.identify(
+				"1hKOmRA4el9Zt1WSfVJIVo4GRlm", {
+				firstName: "Alex",
+				lastName: "Keener",
+				email: "alex@example.com",
+				phone: "+1-202-555-0146"
+			},
+				() => {
+					console.log("Identify event successfully submitted to the RudderStack SDK.");
+				}
+			);
+
 		});
 
 
