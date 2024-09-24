@@ -20,9 +20,10 @@ npm run start
 
 - edit your `GA4_MEASUREMENT_ID` in `index.html` (in two places)
 
+
 - navigate to http://localhost:3000
 
 
 ### bulk import
 
-todo... (no REST API... need to upload CSV file manually...)
+see import.js ... it's a whooooole thaang.
